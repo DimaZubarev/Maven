@@ -1,13 +1,22 @@
+import controller.SkillController;
 import dao.SkillsDao;
 import jdbc.JdbcSkillsDao;
 import model.Skills;
 
-/**
- * Created by Dimon on 13.03.2017.
- */
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class Main {
     public static void main(String[] args) {
-        JdbcSkillsDao jsd = new JdbcSkillsDao();
-        jsd.insertIntoSkills("Scala");
+        SkillController sc = new SkillController();
+        try {
+            sc.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

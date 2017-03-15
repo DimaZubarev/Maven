@@ -1,9 +1,5 @@
 package model;
 
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
-
-import java.sql.*;
-
 public class Skills {
     private int id_skill;
     private String name_skill;
@@ -33,8 +29,8 @@ public class Skills {
     @Override
     public String toString() {
         return "Skills{" +
-                "id_skill = " + id_skill +
-                ", name_skill = " + name_skill + '\'' +
+                "id_skill=" + id_skill +
+                ", name_skill='" + name_skill + '\'' +
                 '}';
     }
 
