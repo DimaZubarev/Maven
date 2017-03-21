@@ -13,13 +13,14 @@ import java.util.List;
 public class JdbcSkillsDao implements SkillsDao {
 
     private static final Logger LOGGER = Logger.getLogger(JdbcSkillsDao.class);
-    private DataSource dataSource;
-
+    static final String UPDATE_NAME_SKILL = "update skills set name_skill = ? where name_skill = ?";
 
     @Override
     public List<Skills> getSkill() {
         List<Skills> skill = new ArrayList<>();
         Skills skills = new Skills(0, null);
+        int id = 0;
+        String name = "";
         final String GET_SKILLS = "select * from skills";
 
         try {
@@ -28,6 +29,7 @@ public class JdbcSkillsDao implements SkillsDao {
                 skills.setId_skill(resultSet.getInt("id_skill"));
                 skills.setName_skill(resultSet.getString("name_skill"));
                 skill.add(skills);
+                System.out.println(skills);
             }
             ConnectionUtils.closeStatement();
             ConnectionUtils.closeConnection();
@@ -68,10 +70,9 @@ public class JdbcSkillsDao implements SkillsDao {
     }
 
     @Override
-    public void updateSkill(String whereName) {
-        final String UPDATE_SKILL_ID = "update skills set id_skill = ? where name_skill = ?";
+    public void updateSkill(String otherName, String whereName) {
         try {
-            ConnectionUtils.preparedStatementCreateDelete(UPDATE_SKILL_ID, whereName);
+            ConnectionUtils.preparedStatementUpdate(UPDATE_NAME_SKILL, otherName, whereName);
             ConnectionUtils.closePrepearedStatement();
             ConnectionUtils.closeConnection();
         } catch (SQLException e) {

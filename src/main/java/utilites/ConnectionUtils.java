@@ -1,6 +1,6 @@
 package utilites;
 
-import model.Skills;
+import com.mysql.fabric.jdbc.FabricMySQLDriver;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ public class ConnectionUtils {
     public static Properties getProperties(){
         FileInputStream fileInputStream;
         Properties property = new Properties();
-        String path = "jdbc.properties";
+        String path = "C:/Users/Dimon/IdeaProjects/Maven/src/main/resources/jdbc.properties";
 
         try {
             fileInputStream = new FileInputStream(path);
@@ -30,6 +30,8 @@ public class ConnectionUtils {
     }
 
     public static void connectionToDataBase(Properties properties) throws SQLException, ClassNotFoundException{
+//        Driver driver = new FabricMySQLDriver();
+//        DriverManager.registerDriver(driver);
         String driver = properties.getProperty("jdbc.driver");
         Class.forName(driver);
         connection = DriverManager.getConnection(properties.getProperty("jdbc.url"),
@@ -53,6 +55,15 @@ public class ConnectionUtils {
         connectionToDataBase(getProperties());
         preparedStatement = connection.prepareStatement(nameMethod);
         preparedStatement.setString(1, whereName);
+        preparedStatement.executeUpdate();
+        return preparedStatement;
+    }
+    public static PreparedStatement preparedStatementUpdate(String nameMethod, String otherName, String whereName)throws
+            SQLException, ClassNotFoundException{
+        connectionToDataBase(getProperties());
+        preparedStatement = connection.prepareStatement(nameMethod);
+        preparedStatement.setString(1, otherName);
+        preparedStatement.setString(2, whereName);
         preparedStatement.executeUpdate();
         return preparedStatement;
     }
